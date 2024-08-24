@@ -71,7 +71,6 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @param employeeDTO
      */
     @Override
-
     public void save(EmployeeDTO employeeDTO) {
         System.out.println("当前线性id:" + Thread.currentThread().getId());
         Employee employee = new Employee();
@@ -109,6 +108,22 @@ public class EmployeeServiceImpl implements EmployeeService {
         long total = page.getTotal();
         List<Employee> recodes = page.getResult();
         return new PageResult(total,recodes);
+    }
+
+    /**
+     * 启用禁用员工账号
+     * @param status
+     * @param id
+     */
+    @Override
+    public void starOrStop(Integer status, Long id) {
+        //基于代码的复用性 我们需要创建update传入Employee
+        //用builder
+        Employee employee = Employee.builder()
+                .status(status)
+                .id(id)
+                .build();
+        employeeMapper.update(employee);
     }
 
 }
